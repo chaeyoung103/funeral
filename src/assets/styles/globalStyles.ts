@@ -1,6 +1,9 @@
 import { css } from "@emotion/react";
 
 export const globalStyles = css`
+  @import "~slick-carousel/slick/slick.css";
+  @import "~slick-carousel/slick/slick-theme.css";
+
   @font-face {
     font-family: "JejuGothic";
     src: url("/fonts/JejuGothicOTF.otf") format("opentype");
