@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react";
 import { globalStyles } from "./assets/styles/globalStyles";
-import Router from "./routers";
+import Router from "@routers/index";
 
 function App() {
   return (

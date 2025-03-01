@@ -3,13 +3,13 @@ import { css } from "@emotion/react";
 export const globalStyles = css`
   @font-face {
     font-family: "JejuGothic";
-    src: url("/src/assets/fonts/JejuGothicOTF.otf") format("opentype");
+    src: url("/fonts/JejuGothicOTF.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
   }
   @font-face {
     font-family: "JejuMyeongjo";
-    src: url("/src/assets/fonts/JejuMyeongjoOTF.otf") format("opentype");
+    src: url("fonts/JejuMyeongjoOTF.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
   }
