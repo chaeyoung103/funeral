@@ -11,7 +11,7 @@ import {
   Room2_1,
 } from "@assets/images";
 import Txt from "@components/text/Txt";
-import { css } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import MonutarySlider from "@components/home/slider/MonutarySlider";
 import Footer from "@components/footer/Footer";
 import useCaculateInnerSize from "src/hook/useCaculateInnerSize";
@@ -128,21 +128,32 @@ const Home = () => {
             `}
           >
             {isTablet || isMobile ? (
-              <>
-                <MenuIcon onClick={toggleMenu} />
-                {isMenuOpen && (
-                  <DropdownMenu ref={menuRef}>
-                    {menuItems.map((item, index) => (
-                      <MenuItem
-                        key={index}
-                        onClick={() => alert(`${item} 선택됨`)}
-                      >
-                        {item}
-                      </MenuItem>
-                    ))}
-                  </DropdownMenu>
-                )}
-              </>
+              <div
+                ref={menuRef}
+                css={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <MenuIcon
+                  onClick={toggleMenu}
+                  css={css`
+                    cursor: pointer;
+                    z-index: 100;
+                  `}
+                />
+                <DropdownMenu className={isMenuOpen ? "open" : ""}>
+                  {menuItems.map((item, index) => (
+                    <MenuItem
+                      key={index}
+                      onClick={() => alert(`${item} 선택됨`)}
+                    >
+                      {item}
+                    </MenuItem>
+                  ))}
+                </DropdownMenu>
+              </div>
             ) : (
               <>
                 <Txt
@@ -188,7 +199,7 @@ const Home = () => {
           }}
         >
           <Col>
-            <Txt
+            <AnimatedTxt
               fontFamily="JejuMyeongjo"
               fontSize="4rem"
               mobileFontSize="2rem"
@@ -210,9 +221,9 @@ const Home = () => {
                   소중한 분의 마지막 여정을 따뜻한 배려로 함께하는
                 </>
               )}
-            </Txt>
+            </AnimatedTxt>
             <Row gap={10} alignItems="flex-end">
-              <Txt
+              <AnimatedTxt
                 fontFamily="JejuMyeongjo"
                 fontSize="4.5rem"
                 mobileFontSize="2.4rem"
@@ -220,8 +231,8 @@ const Home = () => {
                 lineHeight="160%"
               >
                 영주현대장례식장
-              </Txt>
-              <Txt
+              </AnimatedTxt>
+              <AnimatedTxt
                 fontFamily="JejuMyeongjo"
                 fontSize="4rem"
                 mobileFontSize="2rem"
@@ -229,7 +240,7 @@ const Home = () => {
                 lineHeight="180%"
               >
                 입니다.
-              </Txt>
+              </AnimatedTxt>
             </Row>
           </Col>
         </div>
@@ -332,7 +343,7 @@ const Home = () => {
         justifyContent="center"
         alignItems="center"
         gap={isMobile ? 20 : 40}
-        padding="0 20px 150px"
+        padding={isMobile ? "0 20px 150px" : "0 90px 150px"}
       >
         <Txt
           fontFamily="JejuGothic"
@@ -349,7 +360,7 @@ const Home = () => {
             display: "flex",
             justifyContent: "center",
             flexDirection: isMobile ? "column" : "row",
-            gap: isMobile ? 40 : 20,
+            gap: 40,
           }}
         >
           <Col gap={10} justifyContent="flex-start" alignItems="center">
@@ -471,7 +482,18 @@ const DropdownMenu = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 8px 0;
   z-index: 1000; /* 다른 요소 위에 표시 */
-  transition: 1s;
+  overflow: hidden; /* 슬라이드 애니메이션을 위해 overflow hidden */
+
+  /* transition으로 높이와 투명도를 조절 */
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+
+  /* 메뉴가 열릴 때 클래스를 추가하여 스타일 변경 */
+  &.open {
+    max-height: 200px; /* 충분히 큰 값으로 */
+    opacity: 1;
+  }
 `;
 
 const MenuItem = styled.div`
@@ -483,6 +505,25 @@ const MenuItem = styled.div`
   &:hover {
     background-color: #f2f2f2;
   }
+`;
+
+// 1) keyframes 정의
+const slideUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// 2) Txt를 감싸는 Styled Component
+//    처음 렌더 시 자동으로 애니메이션 실행되게 설정
+const AnimatedTxt = styled(Txt)`
+  animation: ${slideUp} 0.8s ease forwards;
+  /* 0.8초 동안 ease로 애니메이션, forwards로 최종 상태 유지 */
 `;
 
 export default Home;
