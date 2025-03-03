@@ -5,10 +5,8 @@ import Router from "@routers/index";
 function App() {
   return (
     <>
-      <div>
-        <Global styles={globalStyles} />
-        <Router />
-      </div>
+      <Global styles={globalStyles} />
+      <Router />
     </>
   );
 }
