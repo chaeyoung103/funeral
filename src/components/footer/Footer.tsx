@@ -2,13 +2,16 @@ import { Row } from "@components/flex/Flex";
 import Txt from "@components/text/Txt";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import useCaculateInnerSize from "src/hook/useCaculateInnerSize";
 
 const Footer = () => {
+  const { isMobile, isTablet } = useCaculateInnerSize();
   return (
     <FooterContainer>
       <Txt
         fontFamily="JejuMyeongjo"
         fontSize="2.4rem"
+        mobileFontSize="1.2rem"
         color="#fff"
         lineHeight="150%"
         align="center"
@@ -27,12 +30,18 @@ const Footer = () => {
         <Txt
           fontFamily="JejuGothic"
           fontSize="1.6rem"
+          mobileFontSize="0.8rem"
           color="#aaaaaa"
           lineHeight="150%"
           align="flex-start"
           css={css`
             width: 100%;
-            padding: 20px 50px;
+            padding: ${isTablet
+              ? "20px 40px"
+              : isMobile
+              ? "20px 20px"
+              : "20px 50px;"};
+            flex-shrink: 1;
           `}
         >
           주소: 경북 영주시 가흥공단로 11 영주현대장례식장
@@ -41,7 +50,14 @@ const Footer = () => {
           <br />
           Copyright © 영주현대장례식장. All Rights Reserved.
         </Txt>
-        <img src="/src/assets/images/flower.svg" alt="flower" />
+        <img
+          src="/flower.png"
+          alt="flower"
+          css={css`
+            width: ${isTablet ? "180px" : isMobile ? "100px" : "338px"};
+            height: ${isTablet ? "92px" : isMobile ? "51px" : "172px"};
+          `}
+        />
       </Row>
     </FooterContainer>
   );
