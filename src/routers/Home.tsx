@@ -147,7 +147,7 @@ const Home = () => {
                   {menuItems.map((item, index) => (
                     <MenuItem
                       key={index}
-                      onClick={() => alert(`${item} 선택됨`)}
+                      onClick={() => alert(`${item} 로 이동합니다`)}
                     >
                       {item}
                     </MenuItem>
