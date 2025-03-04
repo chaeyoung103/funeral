@@ -312,7 +312,7 @@ const Home = () => {
           fontSize="2.6rem"
           mobileFontSize="1.3rem"
           color="#545454"
-          lineHeight="160%"
+          lineHeight="180%"
           align="center"
         >
           영주현대장례식장은 소중한 이별의 순간을 정성껏 준비하고,
@@ -522,7 +522,7 @@ const slideUp = keyframes`
 // 2) Txt를 감싸는 Styled Component
 //    처음 렌더 시 자동으로 애니메이션 실행되게 설정
 const AnimatedTxt = styled(Txt)`
-  animation: ${slideUp} 0.8s ease forwards;
+  animation: ${slideUp} 1s ease forwards;
   /* 0.8초 동안 ease로 애니메이션, forwards로 최종 상태 유지 */
 `;
 
