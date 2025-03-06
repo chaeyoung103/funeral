@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Header from "./Header";
 import useCaculateInnerSize from "src/hook/useCaculateInnerSize";
 import { css } from "@emotion/react";
+import backgroundImg from "@assets/images/sub-header.png";
 
 interface SubHeaderProps {
   title: string;
@@ -13,7 +14,7 @@ const SubHeader = ({ title }: SubHeaderProps) => {
 
   return (
     <SubHeaderContainer isMobile={isMobile}>
-      <BackGroundImg src="/src/assets/images/sub-header.png" alt="subHeader" />
+      <BackGroundImg src={backgroundImg} alt="subHeader" />
       <Header />
       <Txt
         fontSize="4.8rem"
