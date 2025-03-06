@@ -36,8 +36,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           monutaryInfo: extractMonutaryNames(cells[2]), // 상주 이름만 추출
           mournerInfo: extractMournerInfo(cells[0]), // 빈소 정보
           locationInfo: cells[3].textContent?.replace(/\s+/g, " ").trim() || "", // 장례식장 정보
-          startDateInfo: extractDateInfo(cells[4], 0), // 시작 날짜
-          endDateInfo: extractDateInfo(cells[4], 1), // 종료 날짜
+          startDateInfo: extractDateInfo(cells[4], 0), // 시작 날짜 (불필요한 HTML 태그 제거)
+          endDateInfo: extractDateInfo(cells[4], 1), // 종료 날짜 (불필요한 HTML 태그 제거)
         };
       })
       .filter(Boolean); // `null` 값 제거
@@ -89,11 +89,13 @@ function extractMonutaryNames(cell: Element): string {
 }
 
 /**
- * 🔹 날짜 정보 추출 함수
+ * 🔹 날짜 정보 추출 함수 (불필요한 `<br>` 제거)
  */
 function extractDateInfo(cell: Element, index: number): string {
-  const dateLines = cell.innerHTML
-    .split("<br>")
-    .map((line) => line.replace(/\s+/g, " ").trim());
+  const dateLines =
+    cell.textContent
+      ?.split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line) || [];
   return dateLines[index] || "";
 }
