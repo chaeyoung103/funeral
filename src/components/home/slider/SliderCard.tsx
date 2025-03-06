@@ -46,13 +46,16 @@ const SliderCard = ({
         </Txt>
       </Row>
       <Row gap={15}>
-        <NameCard>상주명</NameCard>
+        <NameCard>유가족</NameCard>
         <Txt
           fontSize="14px"
           color="#1F2236"
           lineHeight="24px"
           css={css`
             max-width: 150px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
           `}
         >
           {mournerInfo}
@@ -60,7 +63,17 @@ const SliderCard = ({
       </Row>
       <Row gap={15}>
         <NameCard>장지</NameCard>
-        <Txt fontSize="14px" color="#1F2236" lineHeight="24px">
+        <Txt
+          fontSize="14px"
+          color="#1F2236"
+          lineHeight="24px"
+          css={css`
+            max-width: 150px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+          `}
+        >
           {locationInfo}
         </Txt>
       </Row>
