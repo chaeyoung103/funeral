@@ -18,7 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    const rows = document.querySelectorAll("table tbody tr");
+    const rows = document.querySelectorAll("tbody tr");
 
     if (rows.length === 0) {
       console.warn("⚠️ [WARN] 테이블 데이터 없음");
@@ -31,13 +31,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (cells.length < 5) return null; // 유효한 데이터만 처리
 
         return {
-          image: "imageurl", // 이미지 URL이 없는 경우 기본값 설정
-          nameInfo: cells[1].textContent?.trim() || "", // 고인 이름
-          monutaryInfo: cells[2].textContent?.trim() || "", // 상주 정보
-          mournerInfo: cells[0].textContent?.trim() || "", // 분향실 정보
-          startDateInfo: cells[3].textContent?.trim().split("\n")[0] || "", // 시작 날짜
-          endDateInfo: cells[4].textContent?.trim().split("\n")[0] || "", // 종료 날짜
-          locationInfo: cells[3].textContent?.trim().split("\n").pop() || "", // 장례식장 위치
+          image: cells[1].querySelector("img")?.getAttribute("src") || "", // 고인 이미지 URL
+          nameInfo: cells[0].textContent?.replace(/\s+/g, " ").trim() || "", // 고인 이름
+          monutaryInfo: extractMonutaryInfo(cells[2]), // 상주 정보 (함수로 가공)
+          mournerInfo: extractMournerInfo(cells[0]), // 빈소 정보 (함수로 가공)
+          locationInfo: cells[3].textContent?.replace(/\s+/g, " ").trim() || "", // 장례식장 정보
+          startDateInfo: extractDateInfo(cells[4], 0), // 시작 날짜
+          endDateInfo: extractDateInfo(cells[4], 1), // 종료 날짜
         };
       })
       .filter(Boolean); // `null` 값 제거
@@ -50,4 +50,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .status(500)
       .json({ error: "서버 내부 오류 발생", details: error });
   }
+}
+
+/**
+ * 🔹 빈소 정보 추출 함수
+ */
+function extractMournerInfo(cell: Element): string {
+  const spanElement = cell.querySelector("span.relation");
+  return spanElement ? spanElement.textContent?.trim() || "" : "";
+}
+
+/**
+ * 🔹 상주 정보 추출 함수
+ */
+function extractMonutaryInfo(cell: Element): string {
+  const spans = cell.querySelectorAll("span.relation");
+  const relations: string[] = [];
+
+  spans.forEach((span) => {
+    const relationText = span.textContent?.trim() || "";
+    const nameText = span.nextSibling?.textContent?.trim() || "";
+    if (relationText && nameText) {
+      relations.push(`${relationText} ${nameText}`);
+    }
+  });
+
+  return relations.join(", ");
+}
+
+/**
+ * 🔹 날짜 정보 추출 함수
+ */
+function extractDateInfo(cell: Element, index: number): string {
+  const dateLines = cell.innerHTML
+    .split("<br>")
+    .map((line) => line.replace(/\s+/g, " ").trim());
+  return dateLines[index] || "";
 }
