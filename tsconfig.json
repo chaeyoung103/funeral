@@ -20,7 +20,7 @@
     "noUnusedParameters": false, // deployment bug fix
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "svg.d.ts"],
+  "include": ["src", "svg.d.ts", "api/scrape.js"],
   "extends": ["./tsconfig.paths.json"],
   "references": [
     {

@@ -1,9 +1,11 @@
+import { Col } from "@components/flex/Flex";
+import SubHeader from "@components/header/SubHeader";
+
 const Contact = () => {
   return (
-    <div>
-      <h1>Contact</h1>
-      <p>Welcome to the contact page!</p>
-    </div>
+    <Col>
+      <SubHeader title="오시는길" />
+    </Col>
   );
 };
 

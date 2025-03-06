@@ -1,9 +1,11 @@
+import { Col } from "@components/flex/Flex";
+import SubHeader from "@components/header/SubHeader";
+
 const About = () => {
   return (
-    <div>
-      <h1>About</h1>
-      <p>This is the about page.</p>
-    </div>
+    <Col>
+      <SubHeader title="시설안내" />
+    </Col>
   );
 };
 
