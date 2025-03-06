@@ -42,6 +42,7 @@ const Header = () => {
       <Row
         justifyContent="flex-start"
         alignItems="center"
+        onClick={() => navigate("/")}
         css={css`
           cursor: pointer;
         `}
