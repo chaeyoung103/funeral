@@ -32,9 +32,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         return {
           image: cells[1].querySelector("img")?.getAttribute("src") || "", // 고인 이미지 URL
-          nameInfo: cells[0].textContent?.replace(/\s+/g, " ").trim() || "", // 고인 이름
-          monutaryInfo: extractMonutaryInfo(cells[2]), // 상주 정보 (함수로 가공)
-          mournerInfo: extractMournerInfo(cells[0]), // 빈소 정보 (함수로 가공)
+          nameInfo: extractNameInfo(cells[0]), // 고인 이름 (빈소 정보 제거)
+          monutaryInfo: extractMonutaryNames(cells[2]), // 상주 이름만 추출
+          mournerInfo: extractMournerInfo(cells[0]), // 빈소 정보
           locationInfo: cells[3].textContent?.replace(/\s+/g, " ").trim() || "", // 장례식장 정보
           startDateInfo: extractDateInfo(cells[4], 0), // 시작 날짜
           endDateInfo: extractDateInfo(cells[4], 1), // 종료 날짜
@@ -53,6 +53,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 /**
+ * 🔹 빈소 정보 제거하고 고인 이름만 추출
+ */
+function extractNameInfo(cell: Element): string {
+  const text = cell.textContent?.replace(/\s+/g, " ").trim() || "";
+  const words = text.split(" ");
+  words.shift(); // 맨 앞 단어 제거 (빈소 정보 제거)
+  return words.join(" "); // 남은 부분만 반환
+}
+
+/**
  * 🔹 빈소 정보 추출 함수
  */
 function extractMournerInfo(cell: Element): string {
@@ -61,21 +71,21 @@ function extractMournerInfo(cell: Element): string {
 }
 
 /**
- * 🔹 상주 정보 추출 함수
+ * 🔹 상주 이름만 추출 (관계명 제외)
  */
-function extractMonutaryInfo(cell: Element): string {
+function extractMonutaryNames(cell: Element): string {
   const spans = cell.querySelectorAll("span.relation");
-  const relations: string[] = [];
+  const names: string[] = [];
 
   spans.forEach((span) => {
-    const relationText = span.textContent?.trim() || "";
-    const nameText = span.nextSibling?.textContent?.trim() || "";
-    if (relationText && nameText) {
-      relations.push(`${relationText} ${nameText}`);
+    const nameText =
+      span.nextSibling?.textContent?.replace(/\s+/g, " ").trim() || "";
+    if (nameText) {
+      names.push(nameText);
     }
   });
 
-  return relations.join(", ");
+  return names.join(", ");
 }
 
 /**
