@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from "@emotion/styled";
 import useCaculateInnerSize from "src/hook/useCaculateInnerSize";
 import Txt from "@components/text/Txt";
+import { useEffect, useRef, useState } from "react";
 
 interface MonutarySliderProps {
   infoList: {
@@ -20,6 +21,16 @@ interface MonutarySliderProps {
 
 const MonutarySlider = ({ infoList }: MonutarySliderProps) => {
   const { innerWidth } = useCaculateInnerSize();
+
+  const [maxHeight, setMaxHeight] = useState(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    // 모든 카드의 높이 중 가장 큰 값 찾기
+    const heights = cardRefs.current.map((card) => card?.offsetHeight || 0);
+    const max = Math.max(...heights);
+    setMaxHeight(max);
+  }, [infoList]); // infoList 변경 시 다시 계산
 
   let num = 0;
 
@@ -57,7 +68,14 @@ const MonutarySlider = ({ infoList }: MonutarySliderProps) => {
       ) : (
         <StyledSlider {...settings} num={num}>
           {infoList.map((info, index) => (
-            <SliderCardWrapper key={index} num={num}>
+            <SliderCardWrapper
+              key={index}
+              num={num}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              height={maxHeight}
+            >
               <SliderCard
                 image={info.image}
                 nameInfo={info.nameInfo}
@@ -78,7 +96,7 @@ const MonutarySlider = ({ infoList }: MonutarySliderProps) => {
 const StyledSlider = styled(Slider)<{ num: number }>`
   width: ${(props) =>
     props.num * 300}px; // 슬라이더의 너비를 300px로 설정합니다.
-  height: 550px; // 슬라이더의 높이를 200px로 설정합니다.
+  height: auto; // 슬라이더의 높이를 200px로 설정합니다.
 
   .slick-prev {
     left: ${(props) => (props.num === 1 ? -25 : -30)}px;
@@ -97,9 +115,9 @@ const StyledSlider = styled(Slider)<{ num: number }>`
   }
 `;
 
-const SliderCardWrapper = styled.div<{ num: number }>`
-  padding: 0 10px // 슬라이더 아이템 사이의 간격을 맞추기 위해.
-;
+const SliderCardWrapper = styled.div<{ num: number; height: number }>`
+  padding: 0 10px; // 슬라이더 아이템 사이의 간격을 맞추기 위해.
+  height: ${(props) => props.height}px;
 `;
 
 export default MonutarySlider;

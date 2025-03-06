@@ -11,6 +11,7 @@ interface SliderCardProps {
   startDateInfo: string;
   endDateInfo: string;
   locationInfo: string;
+  height?: string;
 }
 
 const SliderCard = ({
@@ -21,9 +22,10 @@ const SliderCard = ({
   startDateInfo,
   endDateInfo,
   locationInfo,
+  height = "auto",
 }: SliderCardProps) => {
   return (
-    <SliderContainer>
+    <SliderContainer height={height}>
       <img
         src={image}
         alt="slider"
@@ -42,7 +44,7 @@ const SliderCard = ({
       <Row gap={15}>
         <NameCard>빈소</NameCard>
         <Txt fontSize="14px" color="#1F2236" lineHeight="24px">
-          {monutaryInfo}
+          {mournerInfo}
         </Txt>
       </Row>
       <Row gap={15}>
@@ -58,7 +60,7 @@ const SliderCard = ({
             white-space: normal;
           `}
         >
-          {mournerInfo}
+          {monutaryInfo}
         </Txt>
       </Row>
       <Row gap={15}>
@@ -93,9 +95,9 @@ const SliderCard = ({
   );
 };
 
-const SliderContainer = styled.div`
+const SliderContainer = styled.div<{ height: string }>`
   width: 280px;
-  height: 522px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
