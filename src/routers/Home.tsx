@@ -20,13 +20,13 @@ const Home = () => {
 
   const monutaryInfoList = [
     {
-      image: "dd",
+      image: "imageurl",
       nameInfo: "홍길동",
-      monutaryInfo: "홍길동, 홍길동",
-      mournerInfo: "dd",
-      startDateInfo: "dd",
-      endDateInfo: "dd",
-      locationInfo: "dd",
+      monutaryInfo: "강경호, 강주호, 강인호",
+      mournerInfo: "특실",
+      startDateInfo: "03/08 10:00",
+      endDateInfo: "03/08 10:00",
+      locationInfo: "영주 시립화장장",
     },
     {
       image: "dd",
@@ -57,8 +57,6 @@ const Home = () => {
       window.location.href = `tel:${phoneNumber}`;
     }
   };
-
-  
 
   return (
     <Container>
