@@ -6,6 +6,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     console.log("✅ [INFO] /api/scrape 실행됨");
 
+    // ✅ 허용할 도메인 리스트 설정
+    const allowedOrigins = [
+      "https://funeral-home-website.vercel.app", // 기본 Vercel 도메인
+      "https://www.xn--vk1bp3h5wk29cbscca01vsy5b.com", // 추가한 도메인
+      "https://xn--vk1bp3h5wk29cbscca01vsy5b.com", // www 없는 버전도 추가
+    ];
+
+    // 요청한 origin 가져오기
+    const origin = req.headers.origin || "";
+
+    // 요청한 origin이 허용된 리스트에 포함되어 있으면 해당 origin을 허용
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    } else {
+      res.setHeader(
+        "Access-Control-Allow-Origin",
+        "https://funeral-home-website.vercel.app"
+      );
+    }
+
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    // CORS preflight 요청 처리
+    if (req.method === "OPTIONS") {
+      return res.status(200).end();
+    }
+
     const response = await fetch("https://funein.com/hdfh/manage/viewer/");
     if (!response.ok) {
       console.error(`🔴 [ERROR] HTTP 요청 실패: ${response.status}`);
