@@ -14,30 +14,12 @@ import MonutarySlider from "@components/home/slider/MonutarySlider";
 import Footer from "@components/footer/Footer";
 import useCaculateInnerSize from "src/hook/useCaculateInnerSize";
 import Header from "@components/header/Header";
+import useFuneralData from "src/api/funeralList";
 
 const Home = () => {
   const { isMobile, isTablet } = useCaculateInnerSize();
 
-  const monutaryInfoList = [
-    {
-      image: "imageurl",
-      nameInfo: "홍길동",
-      monutaryInfo: "강경호, 강주호, 강인호",
-      mournerInfo: "특실",
-      startDateInfo: "03/08 10:00",
-      endDateInfo: "03/08 10:00",
-      locationInfo: "영주 시립화장장",
-    },
-    {
-      image: "dd",
-      nameInfo: "홍길동",
-      monutaryInfo: "홍길동, 홍길동",
-      mournerInfo: "dd",
-      startDateInfo: "dd",
-      endDateInfo: "dd",
-      locationInfo: "dd",
-    },
-  ];
+  const monutaryInfoList = useFuneralData();
 
   const handleContact = () => {
     //scrollRef.current?.scrollIntoView({ behavior: "smooth" });
