@@ -109,7 +109,8 @@ const Contact = () => {
               color="#000"
               lineHeight="160%"
               css={css`
-                width: 92%;
+                width: 90%;
+                white-space: pre-wrap;
               `}
             >
               자가용 이용 시
@@ -131,7 +132,8 @@ const Contact = () => {
               color="#000"
               lineHeight="160%"
               css={css`
-                width: 92%;
+                width: 90%;
+                white-space: pre-wrap;
               `}
             >
               시외버스 이용 시
@@ -153,8 +155,8 @@ const Contact = () => {
               color="#000"
               lineHeight="160%"
               css={css`
-                width: 92%;
-                overflow: hidden;
+                width: 90%;
+                white-space: pre-wrap;
               `}
             >
               기차 이용 시
