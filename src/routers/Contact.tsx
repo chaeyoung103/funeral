@@ -170,8 +170,7 @@ const Contact = () => {
   };
 
   useEffect(() => {
-    const kakaoMapKey = import.meta.env.VITE_KAKAO_MAP_KEY; // ✅ 환경 변수 불러오기
-    console.log(kakaoMapKey);
+    const kakaoMapKey = import.meta.env.VITE_KAKAO_MAP_KEY;
     if (!kakaoMapKey) {
       console.error("🚨 카카오 맵 API 키가 설정되지 않았습니다!");
       return;
