@@ -3,17 +3,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 >
   <url>
-    <loc>https://www.xn--vk1bp3h5wk29cbscca01vsy5b.com/</loc>
+    <loc>https://funeral-home-website.vercel.app/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.xn--vk1bp3h5wk29cbscca01vsy5b.com/about</loc>
+    <loc>https://funeral-home-website.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.xn--vk1bp3h5wk29cbscca01vsy5b.com/contact</loc>
+    <loc>https://funeral-home-website.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
